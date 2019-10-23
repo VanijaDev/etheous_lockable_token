@@ -84,6 +84,7 @@ contract EtheousToken is Ownable, ERC20, ERC20Detailed("Etheous", "EHS", 18) {
           releaseTimestamps[msg.sender][i] = releaseTimestamps[msg.sender][length];
           delete releaseTimestamps[msg.sender][length];
           releaseTimestamps[msg.sender].length = releaseTimestamps[msg.sender].length.sub(1);
+          i --;
         } else {
           releaseTimestamps[msg.sender].length = 0;
         }
