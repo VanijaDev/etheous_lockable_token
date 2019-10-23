@@ -97,6 +97,7 @@ contract EtheousToken is Ownable, ERC20, ERC20Detailed("Etheous", "EHS", 18) {
     @param recipient Recipient address.
     @param amount Token amount.
     @param lockDuration Token lock duration.
+    @notice unlockExpired() function gets called automatically to release locked tokens.
    */
   function transfer(address recipient, uint256 amount, uint256 lockDuration, uint256 loopIteractions) public returns (bool) {
     unlockExpired(loopIteractions);
