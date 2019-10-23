@@ -98,16 +98,18 @@ contract EtheousToken is Ownable, ERC20, ERC20Detailed("Etheous", "EHS", 18) {
     @param amount Token amount.
     @param lockDuration Token lock duration.
    */
-  function transfer(address recipient, uint256 amount, uint256 lockDuration) public returns (bool) {
+  function transfer(address recipient, uint256 amount, uint256 lockDuration, uint256 loopIteractions) public returns (bool) {
+    unlockExpired(loopIteractions);
+    
     require(balanceOf(msg.sender).sub(lockedBalances[msg.sender]) >= amount, "Not enough tokens.");
 
-    super.transfer(recipient, amount);    
-    
     if(lockDuration > 0) {
         lockedBalances[recipient] = lockedBalances[recipient].add(amount);
         releaseTimestamps[recipient].push(now.add(lockDuration));
         lockedTokensForReleaseTime[recipient][now.add(lockDuration)] = amount;
     }
+    
+    super.transfer(recipient, amount);    
   }
   
   /**
@@ -117,9 +119,16 @@ contract EtheousToken is Ownable, ERC20, ERC20Detailed("Etheous", "EHS", 18) {
     @param amount Token amount.
     @param lockDuration Token lock duration.
    */
-//   function transferFrom(address sender, address recipient, uint256 amount, uint256 lockDuration) public returns (bool) {
-//     super.transferFrom(sender, recipient, amount);
-//   }
+  function transferFrom(address sender, address recipient, uint256 amount, uint256 lockDuration) public returns (bool) {
+    require(balanceOf(sender).sub(lockedBalances[sender]) >= amount, "Not enough tokens.");
+    
+    if(lockDuration > 0) {
+        lockedBalances[recipient] = lockedBalances[recipient].add(amount);
+        releaseTimestamps[recipient].push(now.add(lockDuration));
+        lockedTokensForReleaseTime[recipient][now.add(lockDuration)] = amount;
+    }
+    super.transferFrom(sender, recipient, amount);
+  }
 
   /**
     @dev Disable transfer functional.
