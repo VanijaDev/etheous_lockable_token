@@ -1,0 +1,23 @@
+{
+  "name": "etheous_lockable_token",
+  "version": "1.0.0",
+  "description": "ERC20 token with transfer lock functional",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VanijaDev/etheous_lockable_token.git"
+  },
+  "author": "Ivan Solomichev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VanijaDev/etheous_lockable_token/issues"
+  },
+  "homepage": "https://github.com/VanijaDev/etheous_lockable_token#readme",
+  "devDependencies": {
+    "@openzeppelin/contracts": "^2.3.0",
+    "@openzeppelin/test-helpers": "^0.5.3"
+  }
+}
