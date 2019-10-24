@@ -31,7 +31,7 @@ contract("Unlock Expired functional", (_accounts) => {
     it("should fail if provided loop iteration amount exeeds maxUnlockIterationCount", async () => {
       const USER_0_TOKENS_RECEIVED_0 = ether("0.2");
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
 
       await expectRevert(etheousToken.unlockExpired(101, {
         from: USER_0_ADDRESS
@@ -48,7 +48,7 @@ contract("Unlock Expired functional", (_accounts) => {
     beforeEach("transfer", async () => {
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_0 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_0 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_0);
       await time.increase(10);
     });
@@ -91,21 +91,21 @@ contract("Unlock Expired functional", (_accounts) => {
       //  0
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_0 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_0 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_0);
       await time.increase(10);
 
       //  1
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_1 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_1);
       await time.increase(20);
 
       //  2
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(4);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_2 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_2);
       await time.increase(30);
     });
@@ -149,7 +149,7 @@ contract("Unlock Expired functional", (_accounts) => {
     beforeEach("transfer", async () => {
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_0 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_0 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_0);
 
       await time.increase(time.duration.minutes(3));
@@ -192,21 +192,21 @@ contract("Unlock Expired functional", (_accounts) => {
       //  0
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_0 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_0 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_0);
       await time.increase(10);
 
       //  1
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_1 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_1);
       await time.increase(20);
 
       //  2
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(4);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_2 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_2);
 
       await time.increase(300);
@@ -251,21 +251,21 @@ contract("Unlock Expired functional", (_accounts) => {
       //  0
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_0 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_0 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_0);
       await time.increase(10);
 
       //  1
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_1 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_1);
       await time.increase(20);
 
       //  2
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(4);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_2 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_2);
 
       await time.increase(200); //  after second release time
@@ -315,21 +315,21 @@ contract("Unlock Expired functional", (_accounts) => {
       //  0
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_0 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_0, USER_0_LOCK_DURATION_0, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_0 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_0);
       await time.increase(10);
 
       //  1
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_1 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_1);
       await time.increase(20);
 
       //  2
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(4);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_2 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_2);
 
       await time.increase(200); //  after second release time
@@ -345,13 +345,13 @@ contract("Unlock Expired functional", (_accounts) => {
       //  2 transfers
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_3 = time.duration.minutes(5);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_3, USER_0_LOCK_DURATION_3, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_3, USER_0_LOCK_DURATION_3, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_3 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_3);
       await time.increase(10);
 
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_4 = time.duration.minutes(16);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_4, USER_0_LOCK_DURATION_4, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_4, USER_0_LOCK_DURATION_4, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_4 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_4);
 
       assert.equal(0, (await etheousToken.lockedBalances.call(USER_0_ADDRESS)).cmp(USER_0_TOKENS_RECEIVED_2.add(USER_0_TOKENS_RECEIVED_3).add(USER_0_TOKENS_RECEIVED_4)), "wrong lockedBalances after 1");
@@ -375,13 +375,13 @@ contract("Unlock Expired functional", (_accounts) => {
       //  2 transfers
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_3 = time.duration.minutes(5);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_3, USER_0_LOCK_DURATION_3, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_3, USER_0_LOCK_DURATION_3, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_3 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_3);
       await time.increase(10);
 
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_4 = time.duration.minutes(16);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_4, USER_0_LOCK_DURATION_4, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_4, USER_0_LOCK_DURATION_4, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_4 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_4);
 
       assert.equal((await etheousToken.getReleaseTimestamps.call(USER_0_ADDRESS)).length, 3, "wrong release timestamps count after 1");
@@ -411,13 +411,13 @@ contract("Unlock Expired functional", (_accounts) => {
       //  2 transfers
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_3 = time.duration.minutes(5);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_3, USER_0_LOCK_DURATION_3, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_3, USER_0_LOCK_DURATION_3, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_3 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_3);
       await time.increase(10);
 
       await time.advanceBlock();
       const USER_0_LOCK_DURATION_4 = time.duration.minutes(16);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_4, USER_0_LOCK_DURATION_4, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_4, USER_0_LOCK_DURATION_4, USER_0_LOOP_ITERATIONS);
       user0ReleaseTimestamp_4 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_4);
 
       assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_0)).cmp(new BN("0")), "wrong lockedTokensForReleaseTime[0] after 1");

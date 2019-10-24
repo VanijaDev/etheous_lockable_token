@@ -30,7 +30,7 @@ contract("Locked data after transfer", (_accounts) => {
     etheousToken = await EtheousToken.new();
 
     user0ReleaseTimestamp_0 = new BN(await time.latest()).add(USER_0_LOCK_DURATION);
-    await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED, USER_0_LOCK_DURATION, USER_0_LOOP_ITERATIONS);
+    await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED, USER_0_LOCK_DURATION, USER_0_LOOP_ITERATIONS);
   });
 
   describe("getReleaseTimestamps", async () => {
@@ -47,7 +47,7 @@ contract("Locked data after transfer", (_accounts) => {
       //  1
       const USER_0_TOKENS_RECEIVED_1 = ether("0.2");
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
       let user0ReleaseTimestamp_1 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_1);
 
       assert.equal((await etheousToken.getReleaseTimestamps.call(USER_0_ADDRESS)).length, 2, "wrong release timestamps count after 1");
@@ -57,7 +57,7 @@ contract("Locked data after transfer", (_accounts) => {
       //  2
       const USER_0_TOKENS_RECEIVED_2 = ether("0.3");
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
       let user0ReleaseTimestamp_2 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_2);
 
       assert.equal((await etheousToken.getReleaseTimestamps.call(USER_0_ADDRESS)).length, 3, "wrong release timestamps count after 2");
@@ -89,7 +89,7 @@ contract("Locked data after transfer", (_accounts) => {
       //  1
       const USER_0_TOKENS_RECEIVED_1 = ether("0.2");
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
       let user0ReleaseTimestamp_1 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_1);
 
       assert.equal((await etheousToken.getMyReleaseTimestamps.call({
@@ -105,7 +105,7 @@ contract("Locked data after transfer", (_accounts) => {
       //  2
       const USER_0_TOKENS_RECEIVED_2 = ether("0.3");
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
       let user0ReleaseTimestamp_2 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_2);
 
       assert.equal((await etheousToken.getMyReleaseTimestamps.call({
@@ -135,14 +135,14 @@ contract("Locked data after transfer", (_accounts) => {
       //  1
       const USER_0_TOKENS_RECEIVED_1 = ether("0.2");
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
 
       assert.equal((await etheousToken.lockedTransferAmount.call(USER_0_ADDRESS)), 2, "wrong lockedTransferAmount count after 1");
 
       //  2
       const USER_0_TOKENS_RECEIVED_2 = ether("0.3");
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
 
       assert.equal((await etheousToken.lockedTransferAmount.call(USER_0_ADDRESS)), 3, "wrong lockedTransferAmount count after 2");
     });
@@ -164,7 +164,7 @@ contract("Locked data after transfer", (_accounts) => {
       //  1
       const USER_0_TOKENS_RECEIVED_1 = ether("0.2");
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
       assert.equal((await etheousToken.myLockedTransferAmount.call({
         from: USER_0_ADDRESS
       })), 2, "wrong myLockedTransferAmount count after 1");
@@ -172,7 +172,7 @@ contract("Locked data after transfer", (_accounts) => {
       //  2
       const USER_0_TOKENS_RECEIVED_2 = ether("0.3");
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
       assert.equal((await etheousToken.myLockedTransferAmount.call({
         from: USER_0_ADDRESS
       })), 3, "wrong myLockedTransferAmount count after 2");
@@ -191,14 +191,14 @@ contract("Locked data after transfer", (_accounts) => {
       //  1
       const USER_0_TOKENS_RECEIVED_1 = ether("0.2");
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
 
       assert.equal(0, (await etheousToken.lockedBalances.call(USER_0_ADDRESS)).cmp(USER_0_TOKENS_RECEIVED.add(USER_0_TOKENS_RECEIVED_1)), "wrong lockedBalances after 1");
 
       //  2
       const USER_0_TOKENS_RECEIVED_2 = ether("0.3");
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
 
       assert.equal(0, (await etheousToken.lockedBalances.call(USER_0_ADDRESS)).cmp(USER_0_TOKENS_RECEIVED.add(USER_0_TOKENS_RECEIVED_1).add(USER_0_TOKENS_RECEIVED_2)), "wrong lockedBalances after 2");
     });
@@ -217,7 +217,7 @@ contract("Locked data after transfer", (_accounts) => {
       //  1
       const USER_0_TOKENS_RECEIVED_1 = ether("0.2");
       const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
       let user0ReleaseTimestamp_1 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_1);
 
       assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_0)).cmp(USER_0_TOKENS_RECEIVED), "wrong lockedTokensForReleaseTime[0] after 1");
@@ -226,7 +226,7 @@ contract("Locked data after transfer", (_accounts) => {
       2
       const USER_0_TOKENS_RECEIVED_2 = ether("0.3");
       const USER_0_LOCK_DURATION_2 = time.duration.minutes(3);
-      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      await etheousToken.transferLocked(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
       let user0ReleaseTimestamp_2 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_2);
 
       assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_0)).cmp(USER_0_TOKENS_RECEIVED), "wrong lockedTokensForReleaseTime[0] after 2");
