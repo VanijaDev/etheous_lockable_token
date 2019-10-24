@@ -99,7 +99,7 @@ contract EtheousToken is Ownable, ERC20, ERC20Detailed("Etheous", "EHS", 18) {
     @param lockDuration Token lock duration.
     @notice unlockExpired() function gets called automatically to release locked tokens.
    */
-  function transfer(address recipient, uint256 amount, uint256 lockDuration, uint256 loopIteractions) public returns (bool) {
+  function transferLocked(address recipient, uint256 amount, uint256 lockDuration, uint256 loopIteractions) public returns (bool) {
     unlockExpired(loopIteractions);
     
     require(balanceOf(msg.sender).sub(lockedBalances[msg.sender]) >= amount, "Not enough tokens.");
@@ -120,7 +120,7 @@ contract EtheousToken is Ownable, ERC20, ERC20Detailed("Etheous", "EHS", 18) {
     @param amount Token amount.
     @param lockDuration Token lock duration.
    */
-  function transferFrom(address sender, address recipient, uint256 amount, uint256 lockDuration) public returns (bool) {
+  function transferLockedFrom(address sender, address recipient, uint256 amount, uint256 lockDuration) public returns (bool) {
     require(balanceOf(sender).sub(lockedBalances[sender]) >= amount, "Not enough tokens.");
     
     if(lockDuration > 0) {
