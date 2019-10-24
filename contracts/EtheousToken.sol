@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
 
 
 contract EtheousToken is Ownable, ERC20, ERC20Detailed("Etheous", "EHS", 18) {
-  uint256 maxUnlockIterationCount = 100;    //  cycle limit for unlockExpired()
+  uint256 public maxUnlockIterationCount = 100;    //  cycle limit for unlockExpired()
     
   mapping (address => uint256) public lockedBalances;   //  (address => amount).
   mapping (address => uint256[]) public releaseTimestamps; //  release timestamps for locked transfers, (address => timestamp[]).
