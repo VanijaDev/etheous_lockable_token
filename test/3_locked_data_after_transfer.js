@@ -203,4 +203,35 @@ contract("Locked data after transfer", (_accounts) => {
       assert.equal(0, (await etheousToken.lockedBalances.call(USER_0_ADDRESS)).cmp(USER_0_TOKENS_RECEIVED.add(USER_0_TOKENS_RECEIVED_1).add(USER_0_TOKENS_RECEIVED_2)), "wrong lockedBalances after 2");
     });
   });
+
+  describe("lockedTokensForReleaseTime", async () => {
+    it("should update lockedTokensForReleaseTime after initial transfer", async () => {
+      // console.log(web3.utils.fromWei(await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_0), "wei"));
+      assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_0)).cmp(USER_0_TOKENS_RECEIVED), "wrong lockedTokensForReleaseTime after 0");
+    });
+
+    it("should update lockedTokensForReleaseTime after multiple transfers", async () => {
+      //  0
+      assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_0)).cmp(USER_0_TOKENS_RECEIVED), "wrong lockedTokensForReleaseTime after 0");
+
+      //  1
+      const USER_0_TOKENS_RECEIVED_1 = ether("0.2");
+      const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
+      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      let user0ReleaseTimestamp_1 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_1);
+
+      assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_0)).cmp(USER_0_TOKENS_RECEIVED), "wrong lockedTokensForReleaseTime[0] after 1");
+      assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_1)).cmp(USER_0_TOKENS_RECEIVED_1), "wrong lockedTokensForReleaseTime[1] after 1");
+
+      2
+      const USER_0_TOKENS_RECEIVED_2 = ether("0.3");
+      const USER_0_LOCK_DURATION_2 = time.duration.minutes(3);
+      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      let user0ReleaseTimestamp_2 = new BN(await time.latest()).add(USER_0_LOCK_DURATION_2);
+
+      assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_0)).cmp(USER_0_TOKENS_RECEIVED), "wrong lockedTokensForReleaseTime[0] after 2");
+      assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_1)).cmp(USER_0_TOKENS_RECEIVED_1), "wrong lockedTokensForReleaseTime[1] after 2");
+      assert.equal(0, (await etheousToken.lockedTokensForReleaseTime.call(USER_0_ADDRESS, user0ReleaseTimestamp_2)).cmp(USER_0_TOKENS_RECEIVED_2), "wrong lockedTokensForReleaseTime[2] after 2");
+    });
+  });
 });
