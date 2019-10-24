@@ -178,4 +178,29 @@ contract("Locked data after transfer", (_accounts) => {
       })), 3, "wrong myLockedTransferAmount count after 2");
     });
   });
+
+  describe("lockedBalances", async () => {
+    it("should update lockedBalances after initial transfer", async () => {
+      assert.equal(0, (await etheousToken.lockedBalances.call(USER_0_ADDRESS)).cmp(USER_0_TOKENS_RECEIVED), "wrong lockedBalances after 0");
+    });
+
+    it("should update lockedTransferAmount after multiple transfers", async () => {
+      //  0
+      assert.equal(0, (await etheousToken.lockedBalances.call(USER_0_ADDRESS)).cmp(USER_0_TOKENS_RECEIVED), "wrong lockedBalances after 0");
+
+      //  1
+      const USER_0_TOKENS_RECEIVED_1 = ether("0.2");
+      const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
+      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+
+      assert.equal(0, (await etheousToken.lockedBalances.call(USER_0_ADDRESS)).cmp(USER_0_TOKENS_RECEIVED.add(USER_0_TOKENS_RECEIVED_1)), "wrong lockedBalances after 1");
+
+      //  2
+      const USER_0_TOKENS_RECEIVED_2 = ether("0.3");
+      const USER_0_LOCK_DURATION_2 = time.duration.minutes(3);
+      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+
+      assert.equal(0, (await etheousToken.lockedBalances.call(USER_0_ADDRESS)).cmp(USER_0_TOKENS_RECEIVED.add(USER_0_TOKENS_RECEIVED_1).add(USER_0_TOKENS_RECEIVED_2)), "wrong lockedBalances after 2");
+    });
+  });
 });
