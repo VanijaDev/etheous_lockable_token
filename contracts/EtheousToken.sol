@@ -114,12 +114,11 @@ contract EtheousToken is Ownable, ERC20, ERC20Detailed("Etheous", "EHS", 18) {
   }
   
   /**
-    @dev Transfers tokens from sender to recipient address.
+    @dev Transfers tokens from sender to recipient address. IMPORTANT: will not unlockExpiredTokens.
     @param sender Sender address.
     @param recipient Recipient address.
     @param amount Token amount.
     @param lockDuration Token lock duration.
-    @notice: will not unlockExpiredTokens.
    */
   function transferLockedFrom(address sender, address recipient, uint256 amount, uint256 lockDuration) public returns (bool) {
     require(balanceOf(sender).sub(lockedBalances[sender]) >= amount, "Not enough tokens.");
