@@ -147,4 +147,35 @@ contract("Locked data after transfer", (_accounts) => {
       assert.equal((await etheousToken.lockedTransferAmount.call(USER_0_ADDRESS)), 3, "wrong lockedTransferAmount count after 2");
     });
   });
+
+  describe("myLockedTransferAmount", async () => {
+    it("should update lockedTransferAmount after initial transfer", async () => {
+      assert.equal((await etheousToken.myLockedTransferAmount.call({
+        from: USER_0_ADDRESS
+      })), 1, "wrong myLockedTransferAmount count after 0");
+    });
+
+    it("should update myLockedTransferAmount after multiple transfers", async () => {
+      //  0
+      assert.equal((await etheousToken.myLockedTransferAmount.call({
+        from: USER_0_ADDRESS
+      })), 1, "wrong myLockedTransferAmount count after 0");
+
+      //  1
+      const USER_0_TOKENS_RECEIVED_1 = ether("0.2");
+      const USER_0_LOCK_DURATION_1 = time.duration.minutes(2);
+      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_1, USER_0_LOCK_DURATION_1, USER_0_LOOP_ITERATIONS);
+      assert.equal((await etheousToken.myLockedTransferAmount.call({
+        from: USER_0_ADDRESS
+      })), 2, "wrong myLockedTransferAmount count after 1");
+
+      //  2
+      const USER_0_TOKENS_RECEIVED_2 = ether("0.3");
+      const USER_0_LOCK_DURATION_2 = time.duration.minutes(3);
+      await etheousToken.transfer(USER_0_ADDRESS, USER_0_TOKENS_RECEIVED_2, USER_0_LOCK_DURATION_2, USER_0_LOOP_ITERATIONS);
+      assert.equal((await etheousToken.myLockedTransferAmount.call({
+        from: USER_0_ADDRESS
+      })), 3, "wrong myLockedTransferAmount count after 2");
+    });
+  });
 });
