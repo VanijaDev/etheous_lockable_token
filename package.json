@@ -19,5 +19,8 @@
   "devDependencies": {
     "@openzeppelin/contracts": "^2.3.0",
     "@openzeppelin/test-helpers": "^0.5.3"
+  },
+  "dependencies": {
+    "truffle-flattener": "^1.4.2"
   }
 }
